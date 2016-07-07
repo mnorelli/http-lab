@@ -8,23 +8,23 @@ var app = angular.module('TheCriminalsApp', ['ngRoute','ngResource']);
 // ROUTES //
 ////////////
 
-app.config(function($routeProvider, $locationProvider){
-  $routeProvider
-    .when('/', {
-      // template: 'Home!'
-      templateUrl: '/index.html',
-      controller: 'CriminalsController'
-    });
-    // .when('/wines/:id', {
-    //     templateUrl: '/templates/wines-show.html',
-    //     controller: 'WinesShowCtrl'
-    // });
+// app.config(function($routeProvider, $locationProvider){
+//   $routeProvider
+//     .when('/', {
+//       // template: 'Home!'
+//       templateUrl: '/index.html',
+//       controller: 'CriminalsController'
+//     });
+//     // .when('/wines/:id', {
+//     //     templateUrl: '/templates/wines-show.html',
+//     //     controller: 'WinesShowCtrl'
+//     // });
 
-    $locationProvider.html5Mode({
-      enabled: true,
-      requireBase: false
-    });
-});
+//     $locationProvider.html5Mode({
+//       enabled: true,
+//       requireBase: false
+//     });
+// });
 
 /////////////////
 // CONTROLLERS //
@@ -35,6 +35,10 @@ app.config(function($routeProvider, $locationProvider){
       console.log(response.criminals)
       $scope.criminals = response['criminals']
     });
+
+//////////////////////////////
+///  ADD DELETE FUNCTION HERE
+//////////////////////////////
 
     // var criminal = Criminals.get({ id: $scope.id }, function() {
     //   console.log(criminal);
