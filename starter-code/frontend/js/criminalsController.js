@@ -1,48 +1,42 @@
 var app = angular.module('TheCriminalsApp', ['ngRoute','ngResource']);
-  // .controller('CriminalsController', CriminalsController);
-
-// CriminalsController.$inject = ['$http'];
-
-
-////////////
-// ROUTES //
-////////////
-
-// app.config(function($routeProvider, $locationProvider){
-//   $routeProvider
-//     .when('/', {
-//       // template: 'Home!'
-//       templateUrl: '/index.html',
-//       controller: 'CriminalsController'
-//     });
-//     // .when('/wines/:id', {
-//     //     templateUrl: '/templates/wines-show.html',
-//     //     controller: 'WinesShowCtrl'
-//     // });
-
-//     $locationProvider.html5Mode({
-//       enabled: true,
-//       requireBase: false
-//     });
-// });
 
 /////////////////
 // CONTROLLERS //
 /////////////////
 
-  app.controller('CriminalsController',function($scope, Criminals) {
-    response = Criminals.query(function(){
-      console.log(response.criminals)
-      $scope.criminals = response['criminals']
-    });
+  app.controller('CriminalsController',function($scope, Criminals, $routeParams) {
 
-//////////////////////////////
-///  ADD DELETE FUNCTION HERE
-//////////////////////////////
+    var self = this;
+    self.getCriminals = getCriminals();
+    self.removeCriminal = removeCriminal;
+    self.addCriminal = addCriminal;
+    self.newCriminal = {};
+    // self.editCriminal = editCriminal;
 
-    // var criminal = Criminals.get({ id: $scope.id }, function() {
-    //   console.log(criminal);
-    // }); // get() returns a single criminal
+    function getCriminals(){
+      response = Criminals.query(function(){
+        $scope.criminals = response.criminals
+      });
+    }
+
+    function addCriminal(){
+      self.newCriminal = new Criminals()
+      self.newCriminal.data = {name:$routeParams.name,location:$routeParams.location,status:$routeParams.status}
+      console.log(self.newCriminal)
+      Criminals.save(self.newCriminal,function(){
+        console.log("saved")
+      })
+      self.newCriminal = {};
+      self.getCriminals
+    }
+
+    function removeCriminal(id){
+      console.log("start delete")
+      Criminals.delete({ id: id }, function(){
+        self.getCriminals
+      });
+    };
+
   });
 
 
@@ -52,7 +46,7 @@ var app = angular.module('TheCriminalsApp', ['ngRoute','ngResource']);
 
   app.factory("Criminals", function($resource) {
     return $resource("http://localhost:3000/criminals/:id", null, {
-      query: {method: 'GET',isArray: false}
+      query: {isArray: false}
     })
   });
 
@@ -65,39 +59,9 @@ var app = angular.module('TheCriminalsApp', ['ngRoute','ngResource']);
 
 
 // function CriminalsController($http){
-//   var self = this;
-//   self.all = [];
-//   self.addCriminal = addCriminal;
-//   self.newCriminal = {};
-//   self.getCriminals = getCriminals();
-//   self.removeCriminal = removeCriminal;
-//   self.editCriminal = editCriminal;
 
-//   function getCriminals(){
-//     $http
-//       .get('http://localhost:3000/criminals')
-//       .then(function(response){
-//         self.all = response.data.criminals;
-//     });
-//   }
 
-//   function addCriminal(){
-//     $http
-//       .post('http://localhost:3000/criminals',self.newCriminal)
-//       .then(function(response){
-//         getCriminals();
-//     });
-//     self.newCriminal = {};
-//   }
 
-//   function removeCriminal(id){
-//     $http
-//       .delete('http://localhost:3000/criminals/'+id)
-//       .then(function(response){
-//         getCriminals();
-//     });
-//     self.newCriminal = {};
-//   }
 
 //   function editCriminal(id){
 //     $http

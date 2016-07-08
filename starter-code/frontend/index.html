@@ -17,31 +17,32 @@
   <h1>Infamous Criminals</h1>
 
 <!-- ADD ng-controller to the section tag -->
-  <section ng-controller='CriminalsController as criminals'>
+  <section ng-controller='CriminalsController as criminalsCtl'>
 
     <!-- FILL IN THE BLANKS! This should show the criminals name, location and status. The span with the status in it should have a class of the status (watch for case sensitivity)-->
     <ul id="criminals">
       <li ng-repeat="criminal in criminals" data-id="">
-        <strong ng-click="criminals.editCriminal(criminal._id)">{{ criminal.name }}</strong> <em>{{ criminal.location }}</em> <span class='status {{ criminal.status | lowercase }}'>{{ criminal.status }}</span>
-        <button class='delete' ng-click="criminals.removeCriminal(criminal._id)">X</button>
+        <strong ng-click="criminalsCtl.editCriminal(criminal._id)">{{ criminal.name }}</strong> <em>{{ criminal.location }}</em> <span class='status {{ criminal.status | lowercase }}'>{{ criminal.status }}</span>
+        <!-- <button class='delete' ng-click="criminalsCtl.removeCriminal(criminal._id)">X</button> -->
+        <button class='delete' ng-click="criminalsCtl.removeCriminal(criminal._id)">X</button>
       </li>
     </ul>
 
 <!-- ADD ng-submit to the form -->
-    <form class="add-criminal" ng-submit="criminals.addCriminal()">
+    <form class="add-criminal" ng-submit="criminalsCtl.addCriminal()">
       <div>
         <label for="newCriminal-name">Name:</label>
-        <input type="text" id="newCriminal-name" ng-model="criminals.newCriminal.name" placeholder="Prof. Moriarty">
+        <input type="text" id="newCriminal-name" ng-model="criminalsCtl.newCriminal.name" placeholder="Prof. Moriarty">
       </div>
       <div>
         <label for="newCriminal-location">Location:</label>
-        <input type="text" id="newCriminal-location" ng-model="criminals.newCriminal.location" placeholder="Reichenbach Falls, CH">
+        <input type="text" id="newCriminal-location" ng-model="criminalsCtl.newCriminal.location" placeholder="Reichenbach Falls, CH">
       </div>
       <div>
         <label for="newCriminal-status">Status:</label>
 
 <!-- ADD ng-model to the select tag -->
-        <select id="newCriminal-status" ng-model="criminals.newCriminal.status">
+        <select id="newCriminal-status" ng-model="criminalsCtl.newCriminal.status">
           <option value="" disabled>- - Please Select One - -</option>
           <option value="Alive">Alive</option>
           <option value="Dead">Dead</option>
